@@ -1,1 +1,1 @@
-let () = print_endline "Hello, Advent of Code 2024!"
+let () = Printf.printf "%s\n" Adventofcode.En.v
