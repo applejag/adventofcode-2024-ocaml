@@ -32,7 +32,24 @@ let parse_lines lines = parse_lines_rec lines [] []
 
 let part1 input =
   let first_list, second_list = parse_lines @@ read_lines input in
-  let first_list_sorted = List.sort compare first_list in
-  let second_list_sorted = List.sort compare second_list in
-  List.map2 (fun a b -> abs @@ (a - b)) first_list_sorted second_list_sorted
+  List.map2
+    (fun a b -> abs @@ (a - b))
+    (List.sort compare first_list)
+    (List.sort compare second_list)
+  |> List.fold_left ( + ) 0 |> Printf.printf "sum: %d\n"
+
+let part2 input =
+  let first_list, second_list = parse_lines @@ read_lines input in
+  let counts_per_num =
+    Array.init
+      (List.fold_left2
+         (fun acc a b -> max acc @@ max a b)
+         0 first_list second_list
+      + 1)
+      (fun _ -> ref 0)
+  in
+  Printf.printf "array len: %d\n" @@ Array.length counts_per_num;
+  List.iter (fun n -> incr @@ Array.get counts_per_num n) second_list;
+  first_list
+  |> List.map (fun n -> n * !(Array.get counts_per_num n))
   |> List.fold_left ( + ) 0 |> Printf.printf "sum: %d\n"
