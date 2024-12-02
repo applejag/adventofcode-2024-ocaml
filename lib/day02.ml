@@ -41,3 +41,40 @@ let part1 input =
       count + match is_report_safe report with true -> 1 | false -> 0)
     0 reports
   |> Printf.printf "safe reports: %d\n"
+
+let list_without_item items idx_to_remove =
+  let rec rec_func remaining idx idx_to_remove =
+    match (remaining, idx = idx_to_remove) with
+    | _ :: rest, true -> rec_func rest (idx + 1) idx_to_remove
+    | _, true -> []
+    | head :: rest, false when idx_to_remove > idx ->
+        head :: rec_func rest (idx + 1) idx_to_remove
+    | _, false -> remaining
+  in
+  rec_func items 0 idx_to_remove
+
+let one_removed_permutations report =
+  match report with
+  | [ _ ] -> [ report ]
+  | _ -> List.mapi (fun i _ -> list_without_item report i) report
+
+let one_removed_permutations_plus_orig report =
+  report :: one_removed_permutations report
+
+let list_any f items = not @@ List.for_all (fun item -> not @@ f item) items
+
+let is_report_safe_or_with_one_removed report =
+  list_any is_report_safe @@ one_removed_permutations_plus_orig report
+
+let part2 input =
+  let reports = parse_input input in
+  Printf.printf "reports count: %d\n" @@ List.length reports;
+  List.fold_left
+    (fun count report ->
+      count
+      +
+      match is_report_safe_or_with_one_removed report with
+      | true -> 1
+      | false -> 0)
+    0 reports
+  |> Printf.printf "safe reports: %d\n"

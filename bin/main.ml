@@ -29,7 +29,7 @@ let () =
 
   match !day_arg with
   | Some 1 -> run_parts 1 (Some Day01.part1) (Some Day01.part2)
-  | Some 2 -> run_parts 2 (Some Day02.part1) None
+  | Some 2 -> run_parts 2 (Some Day02.part1) (Some Day02.part2)
   | Some n when n <= 25 -> run_parts n None None
   | None ->
       print_endline "missing required argument <day>";
