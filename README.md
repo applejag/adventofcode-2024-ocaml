@@ -17,6 +17,9 @@ This repo contains my attempt at Advent of Code 2024 (<https://adventofcode.com/
 > docs before I ever try that language again.
 > For now, this endevour can die in hell while I'm going to skip over to
 > a different language.
+>
+> To not spend too much time thinking, I've decided to use my main
+> language instead: Go <https://github.com/applejag/adventofcode-2024-go>
 
 ## Running
 
